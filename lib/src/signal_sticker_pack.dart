@@ -6,6 +6,7 @@ class SignalStickerPack {
   final String host;
   final String key;
   final String id;
+  final String rootPath;
   final List<int> _decryptedData;
 
   late List<SignalSticker> stickers;
@@ -14,6 +15,7 @@ class SignalStickerPack {
       {required this.id,
       required List<int> decryptedData,
       required this.key,
+      required this.rootPath,
       required this.host})
       : _decryptedData = decryptedData {
     var pack = Pack.fromBuffer(_decryptedData);
@@ -34,8 +36,8 @@ class SignalSticker {
   Future<List<int>?> getData() async {
     if (_data != null) return _data;
 
-    var response =
-        await http.get(Uri.https(pack.host, "/stickers/${pack.id}/full/$id"));
+    var response = await http.get(
+        Uri.https(pack.host, "${pack.rootPath}/stickers/${pack.id}/full/$id"));
     if (response.statusCode == 200) {
       var decrypted =
           await SignalCryptography.decrypt(pack.key, response.bodyBytes);
