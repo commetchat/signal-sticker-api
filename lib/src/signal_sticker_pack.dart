@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:http/http.dart' as http;
 import 'package:signal_sticker_api/src/cryptography.dart';
 import 'package:signal_sticker_api/src/generated/StickerResources.pb.dart';
@@ -7,6 +9,9 @@ class SignalStickerPack {
   final String key;
   final String id;
   final String rootPath;
+  late final String name;
+  late final String author;
+  late final int cover;
   final List<int> _decryptedData;
 
   late List<SignalSticker> stickers;
@@ -22,6 +27,10 @@ class SignalStickerPack {
     stickers = pack.stickers
         .map((e) => SignalSticker(id: e.id, emoji: e.emoji, pack: this))
         .toList();
+
+    name = pack.title;
+    author = pack.author;
+    cover = pack.cover.id;
   }
 }
 
