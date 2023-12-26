@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:http/http.dart' as http;
 import 'package:signal_sticker_api/src/cryptography.dart';
 import 'package:signal_sticker_api/src/generated/StickerResources.pb.dart';
