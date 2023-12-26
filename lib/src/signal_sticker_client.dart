@@ -12,13 +12,16 @@ class PackInfo {
 class SignalStickerClient {
   final String host;
   final String rootPath;
+  final bool useHttps;
 
   const SignalStickerClient(
-      {this.host = "cdn-ca.signal.org", this.rootPath = ""});
+      {this.host = "cdn-ca.signal.org",
+      this.rootPath = "",
+      this.useHttps = true});
 
   Future<SignalStickerPack?> getPack(PackInfo info) async {
-    var url =
-        Uri.https(host, "$rootPath/stickers/${info.packId}/manifest.proto");
+    var path = "$rootPath/stickers/${info.packId}/manifest.proto";
+    var url = useHttps ? Uri.https(host, path) : Uri.http(host, path);
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -26,11 +29,7 @@ class SignalStickerClient {
       if (data == null) return null;
 
       return SignalStickerPack(
-          id: info.packId,
-          decryptedData: data,
-          key: info.key,
-          host: host,
-          rootPath: rootPath);
+          id: info.packId, decryptedData: data, key: info.key, client: this);
     }
     return null;
   }
