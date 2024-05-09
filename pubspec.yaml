@@ -11,5 +11,5 @@ dev_dependencies:
   test: ^1.21.0
 dependencies:
   cryptography: ^2.5.0
-  http: ^0.13.6
+  http: ^1.1.0
   protobuf: ^2.1.0
