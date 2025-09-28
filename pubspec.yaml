@@ -12,4 +12,4 @@ dev_dependencies:
 dependencies:
   cryptography: ^2.5.0
   http: ^1.1.0
-  protobuf: ^3.0.0
+  protobuf: ^2.0.1
